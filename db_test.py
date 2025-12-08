@@ -1,9 +1,12 @@
+from colorama.ansi import clear_screen
 import mysql.connector
 from mysql.connector import Error
 from getpass import getpass
 import hashlib
 import bcrypt
 import os 
+import colorama
+from colorama import Fore, Style
 
 def connect_to_db():
     try:
@@ -18,33 +21,47 @@ def connect_to_db():
         print(f"Erreur de connexion à la base de données: {e}")
         return None
 
-#def list_users(connection):
-    #try:
-        #cursor = connection.cursor()
-        #cursor.execute("SELECT id, username, created_at, is_active FROM users")
-        #users = cursor.fetchall()
+def principale(connection):
+    os.system("cls or clear")
+    while True:
+
+        print(Fore.GREEN + r"""
+    _____                        __________        .__              .__             .__   
+  /     \   ____   ____  __ __  \______   \_______|__| ____   ____ |__|__________  |  |  
+ /  \ /  \_/ __ \ /    \|  |  \  |     ___/\_  __ \  |/    \_/ ___\|  \____ \__  \ |  |  
+/    Y    \  ___/|   |  \  |  /  |    |     |  | \/  |   |  \  \___|  |  |_> > __ \|  |__
+\____|__  /\___  >___|  /____/   |____|     |__|  |__|___|  /\___  >__|   __(____  /____/
+        \/     \/     \/                                  \/     \/   |__|       \/         
+        """ + Style.RESET_ALL +"\n")
+
+        print("1. Voir le profil")
+        print("2. Se déconnecter")
+        print("3. Quitter")
         
-        #if not users:
-            #print("Aucun utilisateur trouvé.")
-            #return
-            
-        #print("\nListe des utilisateurs:")
-        #print("-" * 60)
-        #print(f"{'ID':<5} | {'Nom d\'utilisateur':<20} | {'Date de création':<20} | {'Statut'}")
-        #print("-" * 60)
-        #for user in users:
-            #status = "Actif" if user[3] else "Inactif"
-            #print(f"{user[0]:<5} | {user[1]:<20} | {str(user[2]):<20} | {status}")
-        #print("-" * 60)
+        choix = input("\nVotre choix (1-3): ")
         
-    #except Error as e:
-        #print(f"Erreur lors de la récupération des utilisateurs: {e}")
-    #finally:
-        #if 'cursor' in locals():
-            #cursor.close()
+        if choix == '1':
+            print("\nFonctionnalité en cours de développement...")
+        elif choix == '2':
+            print("\nDéconnexion réussie.")
+            return False  # Retourne au menu de connexion
+        elif choix == '3':
+            print("\nAu revoir !")
+            exit()
+        else:
+            print("\nOption invalide. Veuillez réessayer.")
 
 def login_user(connection):
     try:
+        print(Fore.GREEN + r"""
+.____                 .__        
+|    |    ____   ____ |__| ____  
+|    |   /  _ \ / ___\|  |/    \ 
+|    |__(  <_> ) /_/  >  |   |  \
+|_______ \____/\___  /|__|___|  /
+        \/    /_____/         \/ 
+        """ + Style.RESET_ALL)
+
         username = input("Nom d'utilisateur: ")
         password = getpass("Mot de passe: ")
         
@@ -57,6 +74,9 @@ def login_user(connection):
         
         if user and bcrypt.checkpw(password.encode('utf-8'), user['password_hash'].encode('utf-8')):
             print(f"\nConnexion réussie ! Bienvenue, {user['username']} !")
+            # Boucle tant que l'utilisateur ne se déconnecte pas
+            while principale(connection):
+                pass
             return True
         else:
             print("\nErreur: Nom d'utilisateur ou mot de passe incorrect.")
@@ -71,6 +91,16 @@ def login_user(connection):
 
 def add_user(connection):
     try:
+
+        print(Fore.GREEN + r"""
+         __________              .__          __                 
+        \______   \ ____   ____ |__| _______/  |_  ___________  
+         |       _// __ \ / ___\|  |/  ___/\   __\/ __ \_  __ \ 
+         |    |   \  ___// /_/  >  |\___ \  |  | \  ___/|  | \/ 
+         |____|_  /\___  >___  /|__/____  > |__|  \___  >__|    
+                 \/     \/_____/         \/            \/        
+        """ + Style.RESET_ALL)
+
         username = input("Nouveau nom d'utilisateur: ")
         password = getpass("Nouveau mot de passe: ")
         
@@ -98,6 +128,8 @@ def add_user(connection):
         if 'cursor' in locals():
             cursor.close()
 
+
+
 def main():
     print("=== Gestion simple d'utilisateurs ===\n")
     
@@ -109,7 +141,6 @@ def main():
     try:
         while True:
             print("\nOptions:")
-            #print("1. Lister les utilisateurs")
             print("1. Inscription")
             print("2. Login")
             print("3. Quitter")
