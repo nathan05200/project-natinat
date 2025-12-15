@@ -26,39 +26,22 @@
             <div id="pyMsg" aria-live="polite" style="font-size:13px;color:var(--muted);margin-bottom:8px"></div>
 
             <!-- Affichage erreur / succès serveur -->
-            <?php if (!empty($error)): ?>
-                <div class="errors" role="alert" style="margin-bottom:12px;"><?php echo htmlspecialchars($error); ?></div>
-            <?php endif; ?>
-            <?php if (!empty($success)): ?>
-                <div class="success-box" role="status" style="display:block;margin-bottom:12px;"><?php echo htmlspecialchars($success); ?></div>
-            <?php endif; ?>
+            
 
-            <form id="registerForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" novalidate>
+            <form id="registerForm" method="post" action=" novalidate">
                 <div class="form-row">
                     <div>
-                        <label for="fullname">Nom complet</label>
-                        <input id="fullname" name="fullname" type="text" autocomplete="name" required minlength="2" placeholder="Prénom Nom" />
-                        <div class="errors" id="err-fullname" aria-live="polite"></div>
+                        <label for="username">username</label>
+                        <input id="username" name="username" type="text" autocomplete="name"/>
+                        <div class="errors" id="err-username" aria-live="polite"></div>
                     </div>
-                    <div>
-                        <label for="phone">Téléphone (optionnel)</label>
-                        <input id="phone" name="phone" type="tel" inputmode="tel" pattern="^[0-9+()\-.\s]{6,25}$" placeholder="+33 6 12 34 56 78"  />
-                        <div class="field-help">Format international accepté</div>
-                        <div class="errors" id="err-phone" aria-live="polite"></div>
-                    </div>
-                </div>
 
-                <div>
-                    <label for="email">Adresse e-mail</label>
-                    <input id="email" name="email" type="email" autocomplete="email" required placeholder="vous@exemple.com" />
-                    <div class="errors" id="err-email" aria-live="polite"></div>
-                </div>
 
                 <div class="form-row">
                     <div>
                         <label for="password">Mot de passe</label>
                         <div class="password-wrap">
-                            <input id="password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="8 caractères minimum" />
+                            <input id="password" name="password" type="password" autocomplete="new-password" />
                             <button type="button" class="toggle-eye" id="togglePwd" aria-label="Afficher le mot de passe">👁️</button>
                         </div>
                         <div class="strength" aria-hidden="true" title="Indicateur de force">
@@ -67,13 +50,6 @@
                         <div class="field-help">Utilisez lettres, chiffres et caractères spéciaux.</div>
                         <div class="errors" id="err-password" aria-live="polite"></div>
                     </div>
-
-                    <div>
-                        <label for="confirm">Confirmer mot de passe</label>
-                        <input id="confirm" name="confirm" type="password" autocomplete="new-password" required placeholder="Retapez le mot de passe" />
-                        <div class="errors" id="err-confirm" aria-live="polite"></div>
-                    </div>
-                </div>
 
                 <div class="controls">
                     <label class="checkbox"><input id="terms" name="terms" type="checkbox" required /> <span>J'accepte les <a href="#" style="color:var(--accent);text-decoration:none">conditions d'utilisation</a></span></label>
